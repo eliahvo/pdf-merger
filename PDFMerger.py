@@ -34,15 +34,36 @@ def browsefuncFolder():
     filename = tkfileDialog.asksaveasfilename(
         filetypes=(("pdf files", "*.pdf"),))
     if(filename):
+        global outputFile
         outputFile = filename + ".pdf"
         buttonFolder.config(text=filename+".pdf")
 
 
 def mergePDFs():
-    if(outputFile):
+    if(outputFile and len(pdfFiles) >= 2):
         print("merging")
+
+        # Create a new PdfFileWriter object which represents a blank PDF document
+        pdfWriter = PyPDF2.PdfFileWriter()
+
+        for filePath in pdfFiles:
+            pdf = open(filePath, 'rb')
+            pdfReader = PyPDF2.PdfFileReader(pdf)
+
+            # Loop through all the pagenumbers
+            for pageNum in range(pdfReader.numPages):
+                pageObj = pdfReader.getPage(pageNum)
+                pdfWriter.addPage(pageObj)
+
+            # pdf.close()
+
+        # write pdfs into the a new document
+        pdfOutputFile = open(outputFile, 'wb')
+        pdfWriter.write(pdfOutputFile)
+
+        pdfOutputFile.close()
     else:
-        print("no outputfile set!")
+        print("no outputfile set or not 2 pdfs selected!")
 
 
 # button for first file
