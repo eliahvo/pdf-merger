@@ -10,7 +10,7 @@ A simple python GUI based program to merge PDF files easily.
 1. Choose at least two PDF files that should be merged together.
 2. Select a output file path.
 3. Press `Merge PDFs` to merge the selected files
-</br>
+<br></br>
 ![application screen](/doc/screen.png)
 
 ## Latest
